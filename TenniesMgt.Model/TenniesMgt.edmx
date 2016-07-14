@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TenniesMangementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlayerID1" Type="bigint" Nullable="false" />
+          <Property Name="PlayerID2" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="70" />
+        </EntityType>
+        <EntityType Name="Winner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WinnerID" Type="bigint" Nullable="false" />
+          <Property Name="Point" Type="int" Nullable="false" />
+          <Property Name="MatchID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Match_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="PlayerID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Match_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="PlayerID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Winner_Match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="Winner" Type="Self.Winner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Winner">
+              <PropertyRef Name="MatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Winner_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Winner" Type="Self.Winner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Winner">
+              <PropertyRef Name="WinnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TenniesMangementModelStoreContainer">
+          <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Winner" EntityType="Self.Winner" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Match_User" Association="Self.FK_Match_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Match_User1" Association="Self.FK_Match_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Winner_Match" Association="Self.FK_Winner_Match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Winner" EntitySet="Winner" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Winner_User" Association="Self.FK_Winner_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Winner" EntitySet="Winner" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TenniesMangementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TenniesMangementEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Matches" EntityType="TenniesMangementModel.Match" />
+          <EntitySet Name="Users" EntityType="TenniesMangementModel.User" />
+          <EntitySet Name="Winners" EntityType="TenniesMangementModel.Winner" />
+          <AssociationSet Name="FK_Match_User" Association="TenniesMangementModel.FK_Match_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Match_User1" Association="TenniesMangementModel.FK_Match_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Winner_Match" Association="TenniesMangementModel.FK_Winner_Match">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="Winner" EntitySet="Winners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Winner_User" Association="TenniesMangementModel.FK_Winner_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Winner" EntitySet="Winners" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID1" Type="Int64" Nullable="false" />
+          <Property Name="PlayerID2" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="TenniesMangementModel.FK_Match_User" FromRole="Match" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="TenniesMangementModel.FK_Match_User1" FromRole="Match" ToRole="User" />
+          <NavigationProperty Name="Winners" Relationship="TenniesMangementModel.FK_Winner_Match" FromRole="Match" ToRole="Winner" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Matches" Relationship="TenniesMangementModel.FK_Match_User" FromRole="User" ToRole="Match" />
+          <NavigationProperty Name="Matches1" Relationship="TenniesMangementModel.FK_Match_User1" FromRole="User" ToRole="Match" />
+          <NavigationProperty Name="Winners" Relationship="TenniesMangementModel.FK_Winner_User" FromRole="User" ToRole="Winner" />
+        </EntityType>
+        <EntityType Name="Winner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WinnerID" Type="Int64" Nullable="false" />
+          <Property Name="Point" Type="Int32" Nullable="false" />
+          <Property Name="MatchID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Match" Relationship="TenniesMangementModel.FK_Winner_Match" FromRole="Winner" ToRole="Match" />
+          <NavigationProperty Name="User" Relationship="TenniesMangementModel.FK_Winner_User" FromRole="Winner" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Match_User">
+          <End Type="TenniesMangementModel.User" Role="User" Multiplicity="1" />
+          <End Type="TenniesMangementModel.Match" Role="Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="PlayerID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Match_User1">
+          <End Type="TenniesMangementModel.User" Role="User" Multiplicity="1" />
+          <End Type="TenniesMangementModel.Match" Role="Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="PlayerID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Winner_Match">
+          <End Type="TenniesMangementModel.Match" Role="Match" Multiplicity="1" />
+          <End Type="TenniesMangementModel.Winner" Role="Winner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Winner">
+              <PropertyRef Name="MatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Winner_User">
+          <End Type="TenniesMangementModel.User" Role="User" Multiplicity="1" />
+          <End Type="TenniesMangementModel.Winner" Role="Winner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Winner">
+              <PropertyRef Name="WinnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TenniesMangementModelStoreContainer" CdmEntityContainer="TenniesMangementEntities" >
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="TenniesMangementModel.Match">
+              <MappingFragment StoreEntitySet="Match">
+                <ScalarProperty Name="PlayerID2" ColumnName="PlayerID2" />
+                <ScalarProperty Name="PlayerID1" ColumnName="PlayerID1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TenniesMangementModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Winners">
+            <EntityTypeMapping TypeName="TenniesMangementModel.Winner">
+              <MappingFragment StoreEntitySet="Winner">
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="WinnerID" ColumnName="WinnerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
